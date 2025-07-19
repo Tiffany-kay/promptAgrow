@@ -70,13 +70,16 @@ class StorageService:
         Generate public URL for file
         In production, this would generate signed URLs for cloud storage
         """
+        # Get base URL from environment or use default
+        base_url = "https://promptagrow.onrender.com"
+        
         # Convert local path to URL path
         if file_path.startswith("storage/"):
-            return f"/static/{file_path}"
+            return f"{base_url}/static/{file_path}"
         elif file_path.startswith("static/"):
-            return f"/{file_path}"
+            return f"{base_url}/{file_path}"
         else:
-            return f"/static/{os.path.basename(file_path)}"
+            return f"{base_url}/static/{os.path.basename(file_path)}"
     
     async def design_exists(self, design_id: str) -> bool:
         """Check if design exists in storage"""
