@@ -2,11 +2,11 @@
 window.CONFIG = {
     // Backend API Configuration
     API: {
-        // Development backend URL
-        BASE_URL: 'http://localhost:8000/api',
+        // Production backend URL
+        BASE_URL: 'https://promptagrow.onrender.com/api',
         
-        // Production backend URL (uncomment when deploying)
-        // BASE_URL: 'https://your-backend-domain.com/api',
+        // Development backend URL (comment out when deploying)
+        // BASE_URL: 'http://localhost:8000/api',
         
         // Request timeout in milliseconds
         TIMEOUT: 30000,
