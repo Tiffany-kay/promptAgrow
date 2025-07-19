@@ -1,7 +1,7 @@
 // Wizard Step Management
 class Wizard {
     constructor() {
-        this.steps = ['upload', 'story', 'magic', 'preview', 'download'];
+        this.steps = ['upload', 'story', 'preferences', 'magic', 'preview', 'download'];
         this.currentStep = 0;
         this.stepElements = new Map();
     }
@@ -28,7 +28,10 @@ class Wizard {
         // Step 2: Story
         this.stepElements.set('story', this.createStoryStep());
         
-        // Step 3: Magic (Loading)
+        // Step 3: Preferences
+        this.stepElements.set('preferences', this.createPreferencesStep());
+        
+        // Step 4: Magic (Loading)
         this.stepElements.set('magic', this.createMagicStep());
         
         // Step 4: Preview
@@ -123,6 +126,67 @@ class Wizard {
                     <span data-i18n="common.back">Back</span>
                 </button>
                 <button class="btn-primary" id="step2Next">
+                    <span data-i18n="common.next">Next</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        `;
+        return div;
+    }
+    
+    // Create Preferences Step (Step 3)
+    createPreferencesStep() {
+        const div = document.createElement('div');
+        div.className = 'step-content';
+        div.innerHTML = `
+            <div class="step-header">
+                <h2>🎨 Design Preferences</h2>
+                <p>Help us understand your brand vision</p>
+            </div>
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="preferredColors">Preferred Colors</label>
+                    <div class="color-selector">
+                        <div class="color-options">
+                            <label><input type="checkbox" name="preferredColors" value="red"> <span class="color-sample" style="background-color: #f44336"></span> Red</label>
+                            <label><input type="checkbox" name="preferredColors" value="blue"> <span class="color-sample" style="background-color: #2196f3"></span> Blue</label>
+                            <label><input type="checkbox" name="preferredColors" value="green"> <span class="color-sample" style="background-color: #4caf50"></span> Green</label>
+                            <label><input type="checkbox" name="preferredColors" value="orange"> <span class="color-sample" style="background-color: #ff9800"></span> Orange</label>
+                            <label><input type="checkbox" name="preferredColors" value="purple"> <span class="color-sample" style="background-color: #9c27b0"></span> Purple</label>
+                            <label><input type="checkbox" name="preferredColors" value="yellow"> <span class="color-sample" style="background-color: #ffeb3b"></span> Yellow</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="salesPlatform">Where will you sell this?</label>
+                    <select id="salesPlatform">
+                        <option value="local-market">Local Market</option>
+                        <option value="retail-store">Retail Store</option>
+                        <option value="online-store">Online Store</option>
+                        <option value="farmers-market">Farmer's Market</option>
+                        <option value="wholesale">Wholesale</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="desiredEmotion">What feeling should your brand evoke?</label>
+                    <select id="desiredEmotion">
+                        <option value="trust">Trust & Reliability</option>
+                        <option value="premium">Premium & Luxury</option>
+                        <option value="natural">Natural & Organic</option>
+                        <option value="fun">Fun & Playful</option>
+                        <option value="traditional">Traditional & Heritage</option>
+                        <option value="modern">Modern & Innovative</option>
+                    </select>
+                </div>
+            </div>
+            <div class="step-actions">
+                <button class="btn-secondary" id="step3Back">
+                    <i class="fas fa-arrow-left"></i>
+                    <span data-i18n="common.back">Back</span>
+                </button>
+                <button class="btn-primary" id="step3Next">
                     <span data-i18n="common.next">Create Magic</span>
                     <i class="fas fa-magic"></i>
                 </button>
@@ -225,18 +289,25 @@ class Wizard {
         if (event.target.id === 'step1Next') {
             this.showStep(1);
         } else if (event.target.id === 'step2Next') {
-            // Validate form before proceeding
+            // Validate form before proceeding to preferences
             if (this.validateStoryForm()) {
-                this.showStep(2); // Go to loading step
-                // Call backend API
-                window.app.submitToBackend();
+                this.showStep(2); // Go to preferences step
             }
         } else if (event.target.id === 'step2Back') {
             this.showStep(0);
+        } else if (event.target.id === 'step3Next') {
+            // Validate preferences form before proceeding
+            if (this.validatePreferencesForm()) {
+                this.showStep(3); // Go to loading step
+                // Call backend API
+                window.app.submitToBackend();
+            }
+        } else if (event.target.id === 'step3Back') {
+            this.showStep(1);
         } else if (event.target.id === 'step4Back') {
-            this.showStep(1); // Back to story from preview
+            this.showStep(2); // Back to preferences from preview
         } else if (event.target.id === 'step4Next') {
-            this.showStep(4); // Go to download
+            this.showStep(5); // Go to download
         }
     }
     
@@ -254,6 +325,27 @@ class Wizard {
             this.showStep(0); // Go back to upload
             return false;
         }
+        
+        return true;
+    }
+    
+    // Validate preferences form
+    validatePreferencesForm() {
+        // All preferences are optional, but we should collect them
+        // and store them in appState
+        const selectedColors = [];
+        const colorCheckboxes = document.querySelectorAll('input[name="preferredColors"]:checked');
+        colorCheckboxes.forEach(cb => selectedColors.push(cb.value));
+        
+        const salesPlatform = document.getElementById('salesPlatform')?.value || 'local-market';
+        const desiredEmotion = document.getElementById('desiredEmotion')?.value || 'trust';
+        
+        // Store preferences in app state
+        appState.updateForm('preferredColors', selectedColors);
+        appState.updateForm('salesPlatform', salesPlatform);
+        appState.updateForm('desiredEmotion', desiredEmotion);
+        
+        console.log('🎨 Preferences collected:', { selectedColors, salesPlatform, desiredEmotion });
         
         return true;
     }
