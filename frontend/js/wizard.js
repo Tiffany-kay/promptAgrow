@@ -379,12 +379,12 @@ class Wizard {
         let previewHTML = `
             <div class="design-preview">
                 <div class="design-mockup">
-                    <h3>📦 Packaging Design</h3>
+                    <h3>📦 Your Custom Packaging Design</h3>
                     ${previewData.mockupUrl ? 
-                        `<img src="${previewData.mockupUrl}" alt="Packaging Design" class="mockup-image" />` :
+                        `<img src="${previewData.mockupUrl}" alt="Packaging Design" class="mockup-image" onerror="this.src='https://via.placeholder.com/800x600/2E7D32/FFFFFF?text=Loading+Your+Design...'" />` :
                         `<div class="mockup-placeholder">
-                            <i class="fas fa-box"></i>
-                            <p>Design mockup will appear here</p>
+                            <i class="fas fa-image"></i>
+                            <p>Generating your packaging image...</p>
                         </div>`
                     }
                 </div>

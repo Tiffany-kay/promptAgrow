@@ -254,37 +254,23 @@ class App {
             if (result && !result.error) {
                 console.log('✅ Processing successful result:', result);
                 
-                // Convert relative URLs to absolute URLs
-                const baseURL = 'https://promptagrow.onrender.com';
-                const mockupUrl = result.mockupUrl.startsWith('http') ? result.mockupUrl : `${baseURL}${result.mockupUrl}`;
-                const reportUrl = result.reportUrl.startsWith('http') ? result.reportUrl : `${baseURL}${result.reportUrl}`;
-                
-                console.log('🔗 Converted URLs:', { mockupUrl, reportUrl });
-                
-                // Store results in state with absolute URLs
-                appState.updatePreview('mockupUrl', mockupUrl);
-                appState.updatePreview('pdfUrl', reportUrl);
+                // Store results in state
+                appState.updatePreview('mockupUrl', result.mockupUrl);
+                appState.updatePreview('pdfUrl', result.reportUrl);
                 appState.updatePreview('designId', result.designId);
                 appState.updatePreview('concepts', result.concepts);
                 appState.updatePreview('colorPalette', result.colorPalette);
                 appState.updatePreview('stylesSuggestions', result.stylesSuggestions);
                 appState.updatePreview('aiConfidence', result.aiConfidence);
                 
-                // Create result object with absolute URLs for display
-                const displayResult = {
-                    ...result,
-                    mockupUrl: mockupUrl,
-                    reportUrl: reportUrl
-                };
-                
                 // Move to preview step
                 this.wizard.showStep(3); // Preview step
                 
                 // Display the preview data
                 setTimeout(() => {
-                    console.log('🎨 Calling displayPreview with:', displayResult);
+                    console.log('🎨 Calling displayPreview with:', result);
                     if (this.wizard && this.wizard.displayPreview) {
-                        this.wizard.displayPreview(displayResult);
+                        this.wizard.displayPreview(result);
                     } else {
                         console.error('❌ displayPreview method not found on wizard');
                     }
