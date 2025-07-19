@@ -319,6 +319,16 @@ class Wizard {
             return false;
         }
         
+        // Save form data to state
+        const tagline = document.getElementById('tagline')?.value || '';
+        const productStory = document.getElementById('productStory')?.value || '';
+        
+        appState.updateForm('productName', productName.trim());
+        appState.updateForm('tagline', tagline.trim());
+        appState.updateForm('productStory', productStory.trim());
+        
+        console.log('📝 Story form data saved:', { productName, tagline, productStory });
+        
         const state = appState.getState();
         if (!state.form.image) {
             Components.showToast('Please upload a product image first', 'error');

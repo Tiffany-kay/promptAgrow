@@ -200,9 +200,14 @@ class App {
         const formData = new FormData();
         const state = appState.getState();
         
+        console.log('🔍 Current app state:', state);
+        
         // Add image file
         if (state.form.image) {
             formData.append('image', state.form.image);
+            console.log('📷 Image added:', state.form.image.name, state.form.image.size, 'bytes');
+        } else {
+            console.error('❌ No image found in state!');
         }
         
         // Add form fields
@@ -213,6 +218,16 @@ class App {
         formData.append('desiredEmotion', state.form.desiredEmotion || 'trust');
         formData.append('productStory', state.form.productStory || '');
         formData.append('language', state.currentLanguage || 'en');
+        
+        // Debug log all form data
+        console.log('📦 FormData contents:');
+        for (let [key, value] of formData.entries()) {
+            if (key === 'image') {
+                console.log(`  ${key}:`, value.name, value.size, 'bytes', value.type);
+            } else {
+                console.log(`  ${key}:`, value);
+            }
+        }
         
         return formData;
     }
