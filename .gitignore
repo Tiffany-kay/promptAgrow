@@ -1,0 +1,160 @@
+# PromptAgro - Production .gitignore
+
+# ===== ENVIRONMENT & SECRETS =====
+.env
+.env.local
+.env.production
+.env.staging
+*.env
+.env.*
+
+# API Keys and Secrets
+**/config/secrets.json
+**/api_keys.json
+
+# ===== PYTHON/BACKEND =====
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# Python distributions
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit tests
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# ===== NODE.JS/FRONTEND =====
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.vercel/
+
+# Logs
+*.log
+logs/
+
+# ===== DEVELOPMENT =====
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ===== STORAGE & UPLOADS =====
+# User uploads and generated content
+backend/storage/uploads/*
+backend/storage/designs/*
+backend/storage/mockups/*
+backend/static/temp/*
+
+# Keep directory structure but ignore contents
+!backend/storage/.gitkeep
+!backend/static/.gitkeep
+
+# ===== DATABASE =====
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Database migrations (keep structure, ignore data)
+**/migrations/versions/*.py
+!**/migrations/versions/.gitkeep
+
+# ===== DEPLOYMENT =====
+# Docker
+.dockerignore
+
+# Cloud deployment
+.vercel/
+.netlify/
+.railway/
+
+# Heroku
+Procfile.local
+
+# ===== TESTING =====
+# Test files
+test-*.html
+debug-*.html
+*.test.js
+*.spec.js
+
+# ===== MISCELLANEOUS =====
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+.temp/
+
+# Backup files
+*.bak
+*.backup
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+
+# System files
+.htaccess
+*.log
+error_log
+access_log

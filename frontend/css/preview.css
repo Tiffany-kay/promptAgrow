@@ -1,0 +1,153 @@
+/* Preview Step Styles */
+.preview-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.preview-content {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin: 20px 0;
+}
+
+.preview-loading {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.preview-loading i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+.design-preview {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+.design-mockup {
+    text-align: center;
+}
+
+.design-mockup h3 {
+    margin-bottom: 20px;
+    color: var(--text-primary);
+    font-size: 1.3rem;
+}
+
+.mockup-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.mockup-placeholder {
+    background: var(--background-light);
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    padding: 60px 20px;
+    color: #999;
+}
+
+.mockup-placeholder i {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.design-details h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.design-details h4 {
+    color: var(--text-primary);
+    margin: 20px 0 10px 0;
+    font-size: 1.1rem;
+}
+
+.concepts-list, .styles-list {
+    margin-bottom: 20px;
+}
+
+.concept-item, .style-item {
+    padding: 8px 0;
+    color: var(--text-secondary);
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.color-palette {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.color-swatch {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.color-swatch:hover {
+    transform: scale(1.1);
+}
+
+.design-info {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.design-info small {
+    color: #999;
+    font-size: 0.9rem;
+}
+
+.preview-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.preview-actions button {
+    min-width: 140px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .design-preview {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .preview-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .preview-actions button {
+        width: 100%;
+        max-width: 250px;
+    }
+    
+    .design-info {
+        flex-direction: column;
+        gap: 5px;
+    }
+}

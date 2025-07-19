@@ -1,0 +1,102 @@
+{
+  "hero": {
+    "title": "Give Your Harvest the Glow-Up It Deserves",
+    "subtitle": "Transform your farm products into premium brands with AI-powered packaging design",
+    "cta": "Start Your Packaging Magic",
+    "feature1": "Upload Your Product",
+    "feature2": "AI Design Magic", 
+    "feature3": "Download & Share"
+  },
+  "steps": {
+    "upload": "Upload",
+    "story": "Story",
+    "magic": "Magic",
+    "preview": "Preview",
+    "download": "Download"
+  },
+  "step1": {
+    "title": "📸 Upload Your Product Photo",
+    "subtitle": "Show us what makes your harvest special",
+    "dragDrop": "Drag & Drop Your Photo Here",
+    "or": "or",
+    "browse": "Browse Files",
+    "tip": "Pro tip: Bright, clear shots = better mockups",
+    "change": "Change Photo"
+  },
+  "step2": {
+    "title": "✍️ Tell Your Product's Story",
+    "subtitle": "Every great harvest has a story worth sharing",
+    "productName": "Product Name",
+    "tagline": "Catchy Tagline",
+    "colors": "Preferred Colors",
+    "platform": "Where Do You Sell?",
+    "emotion": "What Feeling Should Your Brand Evoke?",
+    "story": "Your Product's Story",
+    "localMarket": "Local Market",
+    "online": "Online Store",
+    "wholesale": "Wholesale",
+    "retail": "Retail Shops",
+    "farmersMarket": "Farmers Market",
+    "trust": "Trust & Reliability",
+    "premium": "Premium & Luxury",
+    "natural": "Natural & Organic",
+    "traditional": "Traditional & Authentic",
+    "modern": "Modern & Fresh",
+    "family": "Family & Community",
+    "characters": "characters"
+  },
+  "step3": {
+    "title": "🪄 AI Magic in Progress",
+    "subtitle": "Our AI is crafting your perfect packaging design",
+    "message1": "Syncing with bee spirits...",
+    "message2": "Convincing the AI it's a packaging guru...",
+    "message3": "Mixing colors like a digital Picasso...",
+    "message4": "Almost there, hold onto your straw hat!"
+  },
+  "step4": {
+    "title": "👁️ Preview & Perfect Your Design",
+    "subtitle": "Fine-tune until it makes you cry tears of joy",
+    "customize": "Customize Your Design",
+    "colorAdjust": "Color Adjustments",
+    "brightness": "Brightness",
+    "contrast": "Contrast",
+    "saturation": "Saturation",
+    "fontStyle": "Font Style",
+    "layout": "Layout Style",
+    "topLabel": "Top Label",
+    "wrapAround": "Wrap Around",
+    "sticker": "Sticker",
+    "regenerate": "Regenerate Design"
+  },
+  "step5": {
+    "title": "📥 Your Design is Ready!",
+    "subtitle": "Your packaging just got viral. Go flex on the 'Gram!",
+    "success": "Design Complete!",
+    "downloadPDF": "Download PDF Report",
+    "downloadMockup": "Download Mockup",
+    "downloadPrint": "Print-Ready Files",
+    "pdfDesc": "Complete brand guide & specs",
+    "mockupDesc": "High-res image for social media",
+    "printDesc": "Vector files for printing",
+    "shareTitle": "Share Your Success",
+    "saveAccount": "Save to My Designs",
+    "saveNote": "Create a free account to save your designs and access them anywhere",
+    "createAnother": "Create Another Design",
+    "shareSuccess": "Love It? Share Your Story!"
+  },
+  "common": {
+    "next": "Next Step",
+    "back": "Back",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  },
+  "error": {
+    "oops": "Oops! Something Went Wrong",
+    "tryThis": "Try This:",
+    "checkConnection": "Check your internet connection",
+    "refreshPage": "Refresh the page and try again",
+    "supportContact": "Contact support if the problem persists",
+    "retry": "Try Again"
+  }
+}

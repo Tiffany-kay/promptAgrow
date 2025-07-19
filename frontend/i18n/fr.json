@@ -1,0 +1,102 @@
+{
+  "hero": {
+    "title": "Donnez à Votre Récolte la Transformation qu'Elle Mérite",
+    "subtitle": "Transformez vos produits agricoles en marques premium avec la conception d'emballage alimentée par l'IA",
+    "cta": "Commencer Votre Magie d'Emballage",
+    "feature1": "Télécharger Votre Produit",
+    "feature2": "Magie de l'IA",
+    "feature3": "Télécharger et Partager"
+  },
+  "steps": {
+    "upload": "Télécharger",
+    "story": "Histoire",
+    "magic": "Magie",
+    "preview": "Aperçu",
+    "download": "Télécharger"
+  },
+  "step1": {
+    "title": "📸 Téléchargez la Photo de Votre Produit",
+    "subtitle": "Montrez-nous ce qui rend votre récolte spéciale",
+    "dragDrop": "Glissez et Déposez Votre Photo Ici",
+    "or": "ou",
+    "browse": "Parcourir les Fichiers",
+    "tip": "Conseil: Photos claires et lumineuses = meilleurs maquettes",
+    "change": "Changer la Photo"
+  },
+  "step2": {
+    "title": "✍️ Racontez l'Histoire de Votre Produit",
+    "subtitle": "Chaque grande récolte a une histoire qui mérite d'être partagée",
+    "productName": "Nom du Produit",
+    "tagline": "Slogan Accrocheur",
+    "colors": "Couleurs Préférées",
+    "platform": "Où Vendez-vous?",
+    "emotion": "Quel Sentiment Votre Marque Devrait-elle Évoquer?",
+    "story": "Histoire de Votre Produit",
+    "localMarket": "Marché Local",
+    "online": "Boutique En Ligne",
+    "wholesale": "Vente en Gros",
+    "retail": "Magasins de Détail",
+    "farmersMarket": "Marché des Fermiers",
+    "trust": "Confiance et Fiabilité",
+    "premium": "Premium et Luxe",
+    "natural": "Naturel et Biologique",
+    "traditional": "Traditionnel et Authentique",
+    "modern": "Moderne et Frais",
+    "family": "Famille et Communauté",
+    "characters": "caractères"
+  },
+  "step3": {
+    "title": "🪄 Magie de l'IA en Cours",
+    "subtitle": "Notre IA crée votre conception d'emballage parfaite",
+    "message1": "Synchronisation avec les esprits des abeilles...",
+    "message2": "Convaincre l'IA qu'elle est un gourou de l'emballage...",
+    "message3": "Mélanger les couleurs comme un Picasso numérique...",
+    "message4": "Presque fini, accrochez-vous à votre chapeau de paille!"
+  },
+  "step4": {
+    "title": "👁️ Prévisualisez et Perfectionnez Votre Design",
+    "subtitle": "Affinez jusqu'à ce que ça vous fasse pleurer de joie",
+    "customize": "Personnalisez Votre Design",
+    "colorAdjust": "Ajustements de Couleur",
+    "brightness": "Luminosité",
+    "contrast": "Contraste",
+    "saturation": "Saturation",
+    "fontStyle": "Style de Police",
+    "layout": "Style de Mise en Page",
+    "topLabel": "Étiquette du Haut",
+    "wrapAround": "Enveloppe",
+    "sticker": "Autocollant",
+    "regenerate": "Régénérer le Design"
+  },
+  "step5": {
+    "title": "📥 Votre Design est Prêt!",
+    "subtitle": "Votre emballage vient de devenir viral. Allez-y, brillez sur Instagram!",
+    "success": "Design Terminé!",
+    "downloadPDF": "Télécharger le Rapport PDF",
+    "downloadMockup": "Télécharger la Maquette",
+    "downloadPrint": "Fichiers Prêts pour l'Impression",
+    "pdfDesc": "Guide de marque complet et spécifications",
+    "mockupDesc": "Image haute résolution pour les réseaux sociaux",
+    "printDesc": "Fichiers vectoriels pour l'impression",
+    "shareTitle": "Partagez Votre Succès",
+    "saveAccount": "Sauvegarder dans Mes Designs",
+    "saveNote": "Créez un compte gratuit pour sauvegarder vos designs",
+    "createAnother": "Créer un Autre Design",
+    "shareSuccess": "Vous aimez? Partagez Votre Histoire!"
+  },
+  "common": {
+    "next": "Étape Suivante",
+    "back": "Retour",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès"
+  },
+  "error": {
+    "oops": "Oups! Quelque Chose s'est Mal Passé",
+    "tryThis": "Essayez Ceci:",
+    "checkConnection": "Vérifiez votre connexion internet",
+    "refreshPage": "Actualisez la page et réessayez",
+    "supportContact": "Contactez le support si le problème persiste",
+    "retry": "Réessayer"
+  }
+}

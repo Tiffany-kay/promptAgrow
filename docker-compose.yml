@@ -1,0 +1,50 @@
+# PromptAgro Full Stack Docker Compose
+version: '3.8'
+
+services:
+  # Backend API Service
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: promptagro-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=False
+      - HOST=0.0.0.0
+      - PORT=8000
+      - CORS_ORIGINS=http://localhost:3000,https://promptagro.vercel.app
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend/storage:/app/storage
+      - ./backend/static:/app/static
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # Frontend Service (for local development)
+  frontend:
+    image: nginx:alpine
+    container_name: promptagro-frontend
+    ports:
+      - "3000:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+networks:
+  default:
+    name: promptagro-network
+
+volumes:
+  storage_data:
+    driver: local

@@ -1,0 +1,102 @@
+{
+  "hero": {
+    "title": "Ipe Mazao Yako Mzuri Zaidi",
+    "subtitle": "Badilisha mazao yako ya kilimo kuwa mitandao ya hali ya juu kwa kutumia ubunifu wa AI",
+    "cta": "Anza Uchawi wa Kufunga",
+    "feature1": "Pakia Bidhaa Yako",
+    "feature2": "Uchawi wa AI",
+    "feature3": "Pakua na Shiriki"
+  },
+  "steps": {
+    "upload": "Pakia",
+    "story": "Hadithi",
+    "magic": "Uchawi",
+    "preview": "Hakiki",
+    "download": "Pakua"
+  },
+  "step1": {
+    "title": "📸 Pakia Picha ya Bidhaa Yako",
+    "subtitle": "Tuonyeshe ni nini kinachofanya mazao yako kuwa ya kipekee",
+    "dragDrop": "Buruta na Uweke Picha Yako Hapa",
+    "or": "au",
+    "browse": "Tafuta Faili",
+    "tip": "Kidokezo: Picha za mwanga na wazi = mfano bora",
+    "change": "Badilisha Picha"
+  },
+  "step2": {
+    "title": "✍️ Eleza Hadithi ya Bidhaa Yako",
+    "subtitle": "Kila mazao mazuri yana hadithi inayostahili kushirikiwa",
+    "productName": "Jina la Bidhaa",
+    "tagline": "Kauli Mbiu",
+    "colors": "Rangi Unazopenda",
+    "platform": "Unauza Wapi?",
+    "emotion": "Bidhaa Yako Itawaendelea Vipi?",
+    "story": "Hadithi ya Bidhaa Yako",
+    "localMarket": "Soko la Karibu",
+    "online": "Duka la Mtandaoni",
+    "wholesale": "Uuzaji wa Jumla",
+    "retail": "Maduka ya Rejareja",
+    "farmersMarket": "Soko la Wakulima",
+    "trust": "Uaminifu na Kutegemewa",
+    "premium": "Ubora na Anasa",
+    "natural": "Asili na Kikaboni",
+    "traditional": "Jadi na Halisi",
+    "modern": "Kisasa na Mpya",
+    "family": "Familia na Jamii",
+    "characters": "herufi"
+  },
+  "step3": {
+    "title": "🪄 Uchawi wa AI Unaendelea",
+    "subtitle": "AI yetu inabunia muundo wako kamili wa kufunga",
+    "message1": "Kuungana na roho za nyuki...",
+    "message2": "Kushawishi AI kuwa mtaalamu wa kufunga...",
+    "message3": "Kuchanganya rangi kama Picasso wa kidijitali...",
+    "message4": "Karibu kumaliza, shikamana na kofia yako ya nyasi!"
+  },
+  "step4": {
+    "title": "👁️ Hakiki na Ukamilishe Muundo Wako",
+    "subtitle": "Tengeneza hadi ulie machozi ya furaha",
+    "customize": "Badilisha Muundo Wako",
+    "colorAdjust": "Urekebishaji wa Rangi",
+    "brightness": "Mwanga",
+    "contrast": "Tofauti",
+    "saturation": "Umajimaji",
+    "fontStyle": "Mtindo wa Fonti",
+    "layout": "Mtindo wa Muundo",
+    "topLabel": "Lebo ya Juu",
+    "wrapAround": "Zungusha",
+    "sticker": "Stika",
+    "regenerate": "Zaa Muundo Upya"
+  },
+  "step5": {
+    "title": "📥 Muundo Wako Umemaliza!",
+    "subtitle": "Kufunga kwako kumekuwa viral. Nenda ujisifu Instagram!",
+    "success": "Muundo Umekamilika!",
+    "downloadPDF": "Pakua Ripoti ya PDF",
+    "downloadMockup": "Pakua Mfano",
+    "downloadPrint": "Faili za Kuchapisha",
+    "pdfDesc": "Mwongozo kamili wa chapa na vipimo",
+    "mockupDesc": "Picha ya ubora wa juu kwa mitandao ya kijamii",
+    "printDesc": "Faili za vector kwa kuchapisha",
+    "shareTitle": "Shiriki Mafanikio Yako",
+    "saveAccount": "Hifadhi kwenye Miundo Yangu",
+    "saveNote": "Tengeneza akaunti ya bure ili uhifadhi miundo yako",
+    "createAnother": "Tengeneza Muundo Mwingine",
+    "shareSuccess": "Unapenda? Shiriki Hadithi Yako!"
+  },
+  "common": {
+    "next": "Hatua Inayofuata",
+    "back": "Rudi",
+    "loading": "Inapakia...",
+    "error": "Hitilafu",
+    "success": "Mafanikio"
+  },
+  "error": {
+    "oops": "Sawa! Kuna Kitu Kimekosea",
+    "tryThis": "Jaribu Hii:",
+    "checkConnection": "Angalia muunganisho wako wa mtandao",
+    "refreshPage": "Onyesha upya ukurasa na ujaribu tena",
+    "supportContact": "Wasiliana na msaada ikiwa tatizo linaendelea",
+    "retry": "Jaribu Tena"
+  }
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PromptAgro API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>🌾 PromptAgro API Connection Test</h1>
+    
+    <button onclick="testConnection()">Test Backend Connection</button>
+    <button onclick="testSampleDesign()">Test Sample Design</button>
+    <button onclick="window.location.href='index.html'">Go to Main App</button>
+    
+    <div id="results"></div>
+
+    <script>
+        async function testConnection() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<div class="test-result">Testing connection...</div>';
+            
+            try {
+                const response = await fetch('http://localhost:8000/api/health');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    results.innerHTML = `
+                        <div class="test-result success">
+                            ✅ Backend Connected Successfully!<br>
+                            Status: ${data.status}<br>
+                            Services: ${JSON.stringify(data.services)}
+                        </div>
+                    `;
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                results.innerHTML = `
+                    <div class="test-result error">
+                        ❌ Connection Failed: ${error.message}<br>
+                        Make sure backend is running on http://localhost:8000
+                    </div>
+                `;
+            }
+        }
+
+        async function testSampleDesign() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<div class="test-result">Testing sample design generation...</div>';
+            
+            try {
+                const response = await fetch('http://localhost:8000/api/sample-design');
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    results.innerHTML = `
+                        <div class="test-result success">
+                            ✅ Sample Design Generated!<br>
+                            Design ID: ${data.data.designId}<br>
+                            Concepts: ${data.data.concepts ? data.data.concepts.length : 0} generated<br>
+                            AI Confidence: ${(data.data.aiConfidence * 100).toFixed(1)}%
+                        </div>
+                    `;
+                } else {
+                    throw new Error(data.error || 'Failed to generate sample');
+                }
+            } catch (error) {
+                results.innerHTML = `
+                    <div class="test-result error">
+                        ❌ Sample Design Failed: ${error.message}
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

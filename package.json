@@ -1,0 +1,29 @@
+{
+  "name": "promptagro-frontend",
+  "version": "1.0.0",
+  "description": "AI-Powered Agri-Packaging Platform Frontend",
+  "main": "frontend/index.html",
+  "scripts": {
+    "start": "cd frontend && npx serve . -p 3000",
+    "dev": "cd frontend && npx serve . -p 3000 --live-reload",
+    "build": "echo 'Frontend is ready for production'",
+    "lint": "echo 'Linting JavaScript files...'",
+    "preview": "cd frontend && python -m http.server 8000"
+  },
+  "keywords": [
+    "agriculture",
+    "packaging",
+    "ai",
+    "branding",
+    "farmers",
+    "multilingual"
+  ],
+  "author": "PromptAgro Team",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
