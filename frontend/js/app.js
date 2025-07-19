@@ -4,7 +4,7 @@ class App {
         this.wizard = new Wizard();
         this.currentScreen = 'landing';
     }
-    
+
     // Initialize the application
     async init() {
         try {
