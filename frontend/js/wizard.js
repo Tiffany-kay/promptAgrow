@@ -381,7 +381,7 @@ class Wizard {
                 <div class="design-mockup">
                     <h3>📦 Your Custom Packaging Design</h3>
                     ${previewData.mockupUrl ? 
-                        `<img src="${previewData.mockupUrl}" alt="Packaging Design" class="mockup-image" onerror="this.src='https://via.placeholder.com/800x600/2E7D32/FFFFFF?text=Loading+Your+Design...'" />` :
+                        `<img src="${previewData.mockupUrl}" alt="Packaging Design" class="mockup-image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gIDxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMkU3RDMyIi8+ICA8dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1zaXplPSIyNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7wn5OmIFlvdXIgUGFja2FnaW5nIERlc2lnbjwvdGV4dD48L3N2Zz4='" />` :
                         `<div class="mockup-placeholder">
                             <i class="fas fa-image"></i>
                             <p>Generating your packaging image...</p>
