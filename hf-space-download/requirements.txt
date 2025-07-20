@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+torch
+diffusers
+transformers
+Pillow
+safetensors
+torchvision
+accelerate
+python-multipart
+# xformers  # Disabled for Windows compatibility
+

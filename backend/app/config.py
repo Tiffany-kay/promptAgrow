@@ -4,6 +4,10 @@ Configuration settings for PromptAgro Backend
 
 import os
 from typing import List
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 class Settings:
     # Server Configuration
@@ -26,9 +30,14 @@ class Settings:
     UPLOAD_DIR: str = "uploads"
     STATIC_DIR: str = "static"
     
-    # AI Service Configuration
+    # AI Service Configuration - GEMINI + REPLICATE STACK (SECURE!)
     PACKIFY_API_KEY: str = os.getenv("PACKIFY_API_KEY", "")
-    GOOGLE_AI_API_KEY: str = os.getenv("GEMINI_API_KEY", "AIzaSyDkfvNr22S_T6t77cQbdZq7tbwIiZ2CD2g")
+    GOOGLE_AI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
+    DEEPAI_API_KEY: str = os.getenv("DEEPAI_API_KEY", "")
+    HUGGINGFACE_API_KEY: str = os.getenv("HUGGINGFACE_API_KEY", "")
+    REPLICATE_API_KEY: str = os.getenv("REPLICATE_API_KEY", "")
+    REPLICATE_API_TOKEN: str = os.getenv("REPLICATE_API_TOKEN", "")
+    OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
     
     # Cloud Storage Configuration  
     CLOUD_STORAGE_BUCKET: str = os.getenv("CLOUD_STORAGE_BUCKET", "promptagro-designs")

@@ -1,11 +1,78 @@
 // API Communication Module
 class API {
     constructor() {
-        // Use configuration for backend URL
-        this.baseURL = window.CONFIG?.API?.BASE_URL || 'http://localhost:8000/api';
+        // Check if we should use Hugging Face Space
+        this.useHuggingFace = window.CONFIG?.API?.BASE_URL?.includes('hf.space');
+        
+        if (this.useHuggingFace) {
+            this.hfAPI = new HuggingFaceAPI();
+            this.baseURL = this.hfAPI.baseURL;
+        } else {
+            // Use local backend
+            this.baseURL = window.CONFIG?.API?.BASE_URL || 'http://localhost:8000/api';
+        }
+        
         this.timeout = window.CONFIG?.API?.TIMEOUT || 30000;
     }
+
+    // Generate packaging design
+    async generatePackaging(formData) {
+        try {
+            // If using Hugging Face, convert FormData to object
+            if (this.useHuggingFace && this.hfAPI) {
+                const productData = {};
+                for (let [key, value] of formData.entries()) {
+                    if (key === 'preferredColors') {
+                        try {
+                            productData[key] = JSON.parse(value);
+                        } catch {
+                            productData[key] = [value];
+                        }
+                    } else {
+                        productData[key] = value;
+                    }
+                }
+                
+                console.log('🚀 Using Hugging Face Space API');
+                return await this.hfAPI.generatePackaging(productData);
+            }
+            
+            // Use local backend
+            const response = await this.request('/generate', {
+                method: 'POST',
+                body: formData // FormData object with image and form fields
+            });
+            
+            if (response.success) {
+                return response.data;
+            } else {
+                throw new Error(response.error || 'Failed to generate packaging');
+            }
+        } catch (error) {
+            console.error('Packaging generation failed:', error);
+            return this.handleError(error);
+        }
+    }
     
+    // Generate packaging design using Replicate API
+    async generatePackagingWithReplicate(formData) {
+        try {
+            const response = await this.request('/generate-replicate', {
+                method: 'POST',
+                body: formData // FormData object with image and form fields
+            });
+
+            if (response.success) {
+                return response.data; // Return the data directly
+            } else {
+                throw new Error(response.error || 'Failed to generate packaging with Replicate');
+            }
+        } catch (error) {
+            console.error('Replicate packaging generation failed:', error);
+            return this.handleError(error);
+        }
+    }
+
     // Generic API request method  
     async request(endpoint, options = {}) {
         const url = `${this.baseURL}${endpoint}`;
@@ -38,25 +105,6 @@ class API {
             return await response.text();
         } catch (error) {
             console.error('API request failed:', error);
-            return this.handleError(error);
-        }
-    }
-    
-    // Generate packaging design
-    async generatePackaging(formData) {
-        try {
-            const response = await this.request('/generate', {
-                method: 'POST',
-                body: formData // FormData object with image and form fields
-            });
-            
-            if (response.success) {
-                return response.data; // Return the data directly
-            } else {
-                throw new Error(response.error || 'Failed to generate packaging');
-            }
-        } catch (error) {
-            console.error('Packaging generation failed:', error);
             return this.handleError(error);
         }
     }

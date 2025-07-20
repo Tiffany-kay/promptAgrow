@@ -19,6 +19,7 @@ from app.models import (
 )
 from app.services.promptagro_ai import PromptAgroAI
 from app.services.storage import StorageService
+from app.services.replicate_generator import ReplicateImageGenerator
 from app.utils_simple import validate_image, create_pdf_report
 from app.config import settings
 
@@ -27,6 +28,9 @@ router = APIRouter()
 # Initialize services with our own AI
 promptagro_ai = PromptAgroAI(settings.GOOGLE_AI_API_KEY)
 storage_service = StorageService()
+
+# Initialize Replicate service
+generator = ReplicateImageGenerator(settings.REPLICATE_API_TOKEN)
 
 @router.get("/health", response_model=HealthResponse)
 async def health_check():
@@ -89,11 +93,36 @@ async def generate_packaging(
             product_data={
                 "productName": productName,
                 "tagline": tagline,
-                "colors": colors
+                "colors": colors,
+                "preferredColors": colors,
+                "desiredEmotion": desiredEmotion,
+                "salesPlatform": salesPlatform,
+                "productStory": productStory
             }
         )
         
-        # Step 3: Create design report
+        # Check if we're in advice mode (when image generation isn't available)
+        if mockup_data.get("advice_mode"):
+            return GenerateResponse(
+                success=True,
+                data={
+                    "designId": design_id,
+                    "adviceMode": True,
+                    "professionalAdvice": mockup_data.get("professional_advice", ""),
+                    "conceptSummary": mockup_data.get("concept_summary", []),
+                    "nextSteps": mockup_data.get("next_steps", []),
+                    "userMessage": mockup_data.get("user_message", ""),
+                    "concepts": concepts["text_concepts"],
+                    "stylesSuggestions": concepts["style_suggestions"],
+                    "colorPalette": concepts["color_palette"],
+                    "processingTime": mockup_data.get("processing_time", 0),
+                    "aiConfidence": mockup_data.get("ai_confidence", 0.95),
+                    "generator": mockup_data.get("generator", "PromptAgro Smart Advisor"),
+                    "cost": mockup_data.get("cost", "FREE")
+                }
+            )
+        
+        # Step 3: Create design report (only for image mode)
         report_path = await create_pdf_report(
             design_id=design_id,
             mockup_data=mockup_data,
@@ -105,22 +134,36 @@ async def generate_packaging(
             }
         )
         
-        # Step 4: Generate public URLs
+        # Step 4: Generate public URLs (only for image mode)
         mockup_url = await storage_service.get_public_url(mockup_data["image_path"])
         report_url = await storage_service.get_public_url(report_path)
         
+        # Prepare response data
+        response_data = {
+            "designId": design_id,
+            "mockupUrl": mockup_url,
+            "reportUrl": report_url,
+            "concepts": concepts["text_concepts"],
+            "stylesSuggestions": concepts["style_suggestions"],
+            "colorPalette": concepts["color_palette"],
+            "processingTime": mockup_data.get("processing_time", 0),
+            "aiConfidence": mockup_data.get("ai_confidence", 0.85)
+        }
+        
+        # Add professional advice if available
+        if mockup_data.get("has_professional_advice"):
+            response_data.update({
+                "hasProfessionalAdvice": True,
+                "professionalAdvice": mockup_data.get("professional_advice"),
+                "conceptSummary": mockup_data.get("concept_summary"),
+                "userMessage": mockup_data.get("user_message"),
+                "generator": mockup_data.get("generator"),
+                "cost": mockup_data.get("cost")
+            })
+        
         return GenerateResponse(
             success=True,
-            data={
-                "designId": design_id,
-                "mockupUrl": mockup_url,
-                "reportUrl": report_url,
-                "concepts": concepts["text_concepts"],
-                "stylesSuggestions": concepts["style_suggestions"],
-                "colorPalette": concepts["color_palette"],
-                "processingTime": mockup_data.get("processing_time", 0),
-                "aiConfidence": mockup_data.get("ai_confidence", 0.85)
-            }
+            data=response_data
         )
         
     except Exception as e:
@@ -236,3 +279,26 @@ async def get_sample_design():
             "aiConfidence": 0.88
         }
     }
+
+@router.post("/generate-replicate", response_model=GenerateResponse)
+async def generate_with_replicate(
+    productName: str = Form(...),
+    tagline: str = Form(""),
+    preferredColors: str = Form("[]"),
+    salesPlatform: str = Form("local-market"),
+    desiredEmotion: str = Form("trust")
+):
+    """Generate packaging using Replicate API"""
+    try:
+        colors = json.loads(preferredColors)
+        product_data = {
+            "productName": productName,
+            "tagline": tagline,
+            "colors": colors,
+            "salesPlatform": salesPlatform,
+            "desiredEmotion": desiredEmotion
+        }
+        result = await generator.generate_packaging_image(product_data)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Replicate generation failed: {str(e)}")

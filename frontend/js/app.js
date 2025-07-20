@@ -254,29 +254,67 @@ class App {
             if (result && !result.error) {
                 console.log('✅ Processing successful result:', result);
                 
-                // Store results in state
-                appState.updatePreview('mockupUrl', result.mockupUrl);
-                appState.updatePreview('pdfUrl', result.reportUrl);
-                appState.updatePreview('designId', result.designId);
-                appState.updatePreview('concepts', result.concepts);
-                appState.updatePreview('colorPalette', result.colorPalette);
-                appState.updatePreview('stylesSuggestions', result.stylesSuggestions);
-                appState.updatePreview('aiConfidence', result.aiConfidence);
-                
-                // Move to preview step
-                this.wizard.showStep(3); // Preview step
-                
-                // Display the preview data
-                setTimeout(() => {
-                    console.log('🎨 Calling displayPreview with:', result);
-                    if (this.wizard && this.wizard.displayPreview) {
-                        this.wizard.displayPreview(result);
-                    } else {
-                        console.error('❌ displayPreview method not found on wizard');
-                    }
-                }, 500);
-                
-                Components.showToast('Design generated successfully!', 'success');
+                // Check if we're in advice mode (text-only response)
+                if (result.adviceMode) {
+                    console.log('📝 Displaying professional advice mode');
+                    
+                    // Store advice results in state
+                    appState.updatePreview('adviceMode', true);
+                    appState.updatePreview('professionalAdvice', result.professionalAdvice);
+                    appState.updatePreview('conceptSummary', result.conceptSummary);
+                    appState.updatePreview('nextSteps', result.nextSteps);
+                    appState.updatePreview('userMessage', result.userMessage);
+                    appState.updatePreview('generator', result.generator);
+                    appState.updatePreview('cost', result.cost);
+                    appState.updatePreview('designId', result.designId);
+                    appState.updatePreview('concepts', result.concepts);
+                    appState.updatePreview('colorPalette', result.colorPalette);
+                    appState.updatePreview('stylesSuggestions', result.stylesSuggestions);
+                    appState.updatePreview('aiConfidence', result.aiConfidence);
+                    
+                    // Move to advice preview step
+                    this.wizard.showStep(3);
+                    
+                    // Display the advice
+                    setTimeout(() => {
+                        if (this.wizard && this.wizard.displayAdvice) {
+                            this.wizard.displayAdvice(result);
+                        } else if (this.wizard && this.wizard.displayPreview) {
+                            this.wizard.displayPreview(result);
+                        } else {
+                            console.error('❌ No display method found on wizard');
+                        }
+                    }, 500);
+                    
+                    Components.showToast('✨ Professional design advice ready!', 'success');
+                    
+                } else {
+                    // Normal image mode
+                    // Store results in state
+                    appState.updatePreview('adviceMode', false);
+                    appState.updatePreview('mockupUrl', result.mockupUrl);
+                    appState.updatePreview('pdfUrl', result.reportUrl);
+                    appState.updatePreview('designId', result.designId);
+                    appState.updatePreview('concepts', result.concepts);
+                    appState.updatePreview('colorPalette', result.colorPalette);
+                    appState.updatePreview('stylesSuggestions', result.stylesSuggestions);
+                    appState.updatePreview('aiConfidence', result.aiConfidence);
+                    
+                    // Move to preview step
+                    this.wizard.showStep(3); // Preview step
+                    
+                    // Display the preview data
+                    setTimeout(() => {
+                        console.log('🎨 Calling displayPreview with:', result);
+                        if (this.wizard && this.wizard.displayPreview) {
+                            this.wizard.displayPreview(result);
+                        } else {
+                            console.error('❌ displayPreview method not found on wizard');
+                        }
+                    }, 500);
+                    
+                    Components.showToast('Design generated successfully!', 'success');
+                }
             } else {
                 throw new Error(result.error || 'Failed to generate design');
             }
