@@ -61,12 +61,12 @@ class ReplicateImageGenerator:
             prompt = self.create_agricultural_prompt(product_data)
             print(f"📝 Prompt: {prompt}")
             
-            # Generate image via Replicate API using Imagen-3-fast (better for text)
+            # Generate image via Replicate API using Google Imagen-3-Fast (best for text)
             loop = asyncio.get_event_loop()
             output = await loop.run_in_executor(
                 None, 
                 lambda: self.client.run(
-                    "google-deepmind/imagen-3-fast",
+                    "google/imagen-3-fast",
                     input={
                         "prompt": prompt,
                         "width": 1024,
@@ -90,7 +90,7 @@ class ReplicateImageGenerator:
                     "design_id": design_id,
                     "image_url": image_url,
                     "generator": "Google Imagen-3-Fast (Replicate)",
-                    "cost": "~$0.0012 per image",
+                    "cost": "~$0.003 per image",
                     "prompt_used": prompt
                 }
             else:
