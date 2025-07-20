@@ -22,7 +22,7 @@ class ReplicateImageGenerator:
             self.client = None
         
     def create_agricultural_prompt(self, product_data: Dict[str, Any]) -> str:
-        """Create professional prompt for agricultural packaging"""
+        """Create professional prompt for agricultural packaging with better text rendering"""
         product_name = product_data.get("productName", "Product")
         colors = product_data.get("colors", ["green", "white"])
         tagline = product_data.get("tagline", "Fresh & Natural")
@@ -32,13 +32,17 @@ class ReplicateImageGenerator:
         # Color palette
         color_str = " and ".join(colors[:3])
         
-        # Professional packaging prompt for Stability AI SDXL
-        prompt = f"""Professional agricultural product packaging design for {product_name}, 
-        modern minimalist style, {color_str} color scheme, clean typography, 
-        premium quality feel, {tagline}, conveying {emotion}, 
-        suitable for {platform}, product photography style, 
-        white background, high resolution, commercial grade design,
-        photorealistic packaging mockup, studio lighting, eco-friendly design"""
+        # Enhanced prompt focusing on text clarity and professional design
+        prompt = f"""Professional product packaging design concept for "{product_name}", 
+        clean minimalist layout, {color_str} color palette, 
+        large clear readable typography, "{tagline}" as subtitle,
+        modern agricultural branding, premium quality appearance,
+        white background, product photography style, commercial mockup,
+        studio lighting, eco-friendly sustainable design elements,
+        conveying {emotion} emotion, suitable for {platform} sales,
+        high contrast text, sans-serif fonts, professional label design,
+        food packaging industry standard, shelf-ready appearance,
+        3D product visualization, marketing ready design"""
         
         return prompt.strip().replace('\n', ' ').replace('  ', ' ')
     
@@ -57,23 +61,19 @@ class ReplicateImageGenerator:
             prompt = self.create_agricultural_prompt(product_data)
             print(f"📝 Prompt: {prompt}")
             
-            # Generate image via Replicate API
+            # Generate image via Replicate API using Imagen-3-fast (better for text)
             loop = asyncio.get_event_loop()
             output = await loop.run_in_executor(
                 None, 
                 lambda: self.client.run(
-                    "stability-ai/sdxl:39ed52f2a78e934b3ba6e2a89f5b1c712de7dfea535525255b1aa35c5565e08b",
+                    "google-deepmind/imagen-3-fast",
                     input={
                         "prompt": prompt,
                         "width": 1024,
                         "height": 1024,
                         "num_outputs": 1,
-                        "scheduler": "K_EULER",
-                        "num_inference_steps": 20,
-                        "guidance_scale": 7.5,
-                        "prompt_strength": 0.8,
-                        "refine": "expert_ensemble_refiner",
-                        "high_noise_frac": 0.8
+                        "aspect_ratio": "1:1",
+                        "safety_tolerance": 2
                     }
                 )
             )
@@ -89,7 +89,7 @@ class ReplicateImageGenerator:
                     "success": True,
                     "design_id": design_id,
                     "image_url": image_url,
-                    "generator": "Stability AI SDXL (Replicate)",
+                    "generator": "Google Imagen-3-Fast (Replicate)",
                     "cost": "~$0.0012 per image",
                     "prompt_used": prompt
                 }
