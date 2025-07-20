@@ -78,21 +78,36 @@ class ReplicateImageGenerator:
                 )
             )
             
-            if output and len(output) > 0:
-                # Convert FileOutput to string URL
-                image_url = str(output[0]) if hasattr(output[0], 'url') else str(output[0])
-                design_id = f"replicate_{uuid.uuid4().hex[:8]}"
-                
-                print(f"✅ Image generated successfully: {image_url}")
-                
-                return {
-                    "success": True,
-                    "design_id": design_id,
-                    "image_url": image_url,
-                    "generator": "Google Imagen-3-Fast (Replicate)",
-                    "cost": "~$0.003 per image",
-                    "prompt_used": prompt
-                }
+            if output:
+                # Handle different output types
+                try:
+                    # Try to convert to list first
+                    output_list = list(output) if hasattr(output, '__iter__') and not isinstance(output, str) else [output]
+                    if len(output_list) > 0:
+                        # Handle both URL strings and FileOutput objects
+                        first_item = output_list[0]
+                        if hasattr(first_item, 'url'):
+                            image_url = str(first_item.url)
+                        else:
+                            image_url = str(first_item)
+                        
+                        design_id = f"replicate_{uuid.uuid4().hex[:8]}"
+                        
+                        print(f"✅ Image generated successfully: {image_url}")
+                        
+                        return {
+                            "success": True,
+                            "design_id": design_id,
+                            "image_url": image_url,
+                            "generator": "Google Imagen-3-Fast (Replicate)",
+                            "cost": "~$0.003 per image",
+                            "prompt_used": prompt
+                        }
+                    else:
+                        raise ValueError("Empty output list")
+                except Exception as output_error:
+                    print(f"❌ Output processing error: {str(output_error)}")
+                    return await self._create_demo_image(product_data)
             else:
                 print("❌ No output from Replicate")
                 return await self._create_demo_image(product_data)
