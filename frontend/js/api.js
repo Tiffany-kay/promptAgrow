@@ -37,14 +37,24 @@ class API {
                 return await this.hfAPI.generatePackaging(productData);
             }
             
-            // Use local backend
+            // Use backend API
             const response = await this.request('/generate', {
                 method: 'POST',
                 body: formData // FormData object with image and form fields
             });
             
             if (response.success) {
-                return response.data;
+                // Normalize response format for frontend compatibility
+                const normalizedData = {
+                    ...response.data,
+                    // Ensure frontend expected fields are available
+                    mockupUrl: response.data.mockupUrl || response.data.image_url,
+                    designId: response.data.designId || response.data.design_id,
+                    generator: response.data.generator || 'AI Generator',
+                    cost: response.data.cost || 'FREE'
+                };
+                console.log('🔄 Normalized response data:', normalizedData);
+                return normalizedData;
             } else {
                 throw new Error(response.error || 'Failed to generate packaging');
             }
@@ -63,7 +73,16 @@ class API {
             });
 
             if (response.success) {
-                return response.data; // Return the data directly
+                // Normalize response format
+                const normalizedData = {
+                    ...response.data,
+                    mockupUrl: response.data.mockupUrl || response.data.image_url,
+                    designId: response.data.designId || response.data.design_id,
+                    generator: response.data.generator || 'AI Generator',
+                    cost: response.data.cost || 'FREE'
+                };
+                console.log('🔄 Normalized Replicate response:', normalizedData);
+                return normalizedData;
             } else {
                 throw new Error(response.error || 'Failed to generate packaging with Replicate');
             }
