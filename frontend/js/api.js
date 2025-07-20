@@ -9,7 +9,7 @@ class API {
             this.baseURL = this.hfAPI.baseURL;
         } else {
             // Use local backend
-            this.baseURL = window.CONFIG?.API?.BASE_URL || 'http://localhost:8000/api';
+            this.baseURL = window.CONFIG?.API?.BASE_URL || 'https://promptagrow.onrender.com/api';
         }
         
         this.timeout = window.CONFIG?.API?.TIMEOUT || 30000;
