@@ -79,7 +79,8 @@ class ReplicateImageGenerator:
             )
             
             if output and len(output) > 0:
-                image_url = output[0]  # Replicate returns a list of URLs
+                # Convert FileOutput to string URL
+                image_url = str(output[0]) if hasattr(output[0], 'url') else str(output[0])
                 design_id = f"replicate_{uuid.uuid4().hex[:8]}"
                 
                 print(f"✅ Image generated successfully: {image_url}")

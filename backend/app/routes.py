@@ -299,6 +299,17 @@ async def generate_with_replicate(
             "desiredEmotion": desiredEmotion
         }
         result = await generator.generate_packaging_image(product_data)
-        return JSONResponse(content=result)
+        
+        # Convert to GenerateResponse format
+        return GenerateResponse(
+            success=result.get("success", True),
+            data={
+                "designId": result.get("design_id", ""),
+                "mockupUrl": result.get("image_url", ""),
+                "generator": result.get("generator", "Replicate"),
+                "cost": result.get("cost", "FREE"),
+                "promptUsed": result.get("prompt_used", "")
+            }
+        )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Replicate generation failed: {str(e)}")
