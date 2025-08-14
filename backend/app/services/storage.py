@@ -1,5 +1,5 @@
 """
-Storage Service for PromptAgro
+Storage Service for PKL
 Handles file uploads, cloud storage, and design management
 """
 

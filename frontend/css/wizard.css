@@ -40,6 +40,34 @@
     color: white;
 }
 
+.brand-header {
+    margin-bottom: 1rem;
+}
+
+.brand-name {
+    font-size: 4rem;
+    font-weight: 900;
+    font-family: 'Playfair Display', serif;
+    background: linear-gradient(45deg, #FFA726, #FF6B35, #2E7D32);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+    letter-spacing: 0.2em;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    animation: brandGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes brandGlow {
+    0% {
+        filter: drop-shadow(0 0 5px rgba(255, 167, 38, 0.5));
+    }
+    100% {
+        filter: drop-shadow(0 0 20px rgba(255, 107, 53, 0.8));
+    }
+}
+
 .hero-title {
     font-size: 3.5rem;
     margin-bottom: 1rem;

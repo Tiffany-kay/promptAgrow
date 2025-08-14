@@ -227,7 +227,7 @@ class Wizard {
                     <button type="button" class="btn-primary" id="regenerateBtn">
                         <i class="fas fa-sync"></i> Regenerate Design
                     </button>
-                    <button type="button" class="btn-accent" onclick="window.wizard.showStep(4)">
+                    <button type="button" class="btn-accent" onclick="window.wizard.downloadImage()">
                         <i class="fas fa-download"></i> Download
                     </button>
                 </div>
@@ -245,17 +245,27 @@ class Wizard {
     
     // Show specific step
     showStep(stepIndex) {
+        console.log(`🔄 showStep called with stepIndex: ${stepIndex}`);
+        console.log(`🔄 Available steps: ${this.steps}`);
+        console.log(`🔄 Current step: ${this.currentStep}`);
+        
         this.currentStep = stepIndex;
         const stepName = this.steps[stepIndex];
         
+        console.log(`🔄 Showing step: ${stepName}`);
+        
         // Hide all steps
-        this.stepElements.forEach((element) => {
+        this.stepElements.forEach((element, name) => {
             element.style.display = 'none';
+            console.log(`👁️ Hiding step: ${name}`);
         });
         
         // Show current step
         if (this.stepElements.has(stepName)) {
             this.stepElements.get(stepName).style.display = 'block';
+            console.log(`✅ Showing step: ${stepName}`);
+        } else {
+            console.error(`❌ Step element not found: ${stepName}`);
         }
         
         // Update progress
@@ -363,6 +373,10 @@ class Wizard {
     // Display the generated design preview
     displayPreview(previewData) {
         console.log('🎨 displayPreview called with:', previewData);
+        console.log('🔍 previewData keys:', Object.keys(previewData || {}));
+        console.log('🔍 previewData.mockupUrl:', previewData?.mockupUrl);
+        console.log('🔍 previewData.image_url:', previewData?.image_url);
+        console.log('🔍 previewData type:', typeof previewData);
         
         const previewContent = document.getElementById('previewContent');
         const previewActions = document.querySelector('.preview-actions');
@@ -381,7 +395,9 @@ class Wizard {
                 <div class="design-mockup">
                     <h3>📦 Your Custom Packaging Design</h3>
                     ${previewData.mockupUrl ? 
-                        `<img src="${previewData.mockupUrl}" alt="Packaging Design" class="mockup-image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gIDxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMkU3RDMyIi8+ICA8dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1zaXplPSIyNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7wn5OmIFlvdXIgUGFja2FnaW5nIERlc2lnbjwvdGV4dD48L3N2Zz4='" />` :
+                        `<img src="${previewData.mockupUrl}" alt="Packaging Design" class="mockup-image" 
+                             onload="console.log('✅ Image loaded successfully:', this.src)" 
+                             onerror="console.error('❌ Image failed to load:', this.src); this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gIDxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMkU3RDMyIi8+ICA8dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1zaXplPSIyNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7wn5OmIFlvdXIgUGFja2FnaW5nIERlc2lnbjwvdGV4dD48L3N2Zz4='" />` :
                         `<div class="mockup-placeholder">
                             <i class="fas fa-image"></i>
                             <p>Generating your packaging image...</p>
@@ -422,12 +438,65 @@ class Wizard {
             </div>
         `;
         
+        console.log('🎯 Generated preview HTML:', previewHTML);
+        console.log('🎯 Setting innerHTML on:', previewContent);
+        
         previewContent.innerHTML = previewHTML;
+        
+        console.log('✅ HTML set successfully. Content now:', previewContent.innerHTML.length, 'characters');
+        
+        // Debug: Check if elements are visible
+        const mockupImage = previewContent.querySelector('.mockup-image');
+        if (mockupImage) {
+            console.log('🔍 Image element found:', mockupImage);
+            console.log('🔍 Image display style:', getComputedStyle(mockupImage).display);
+            console.log('🔍 Image visibility:', getComputedStyle(mockupImage).visibility);
+            console.log('🔍 Image width:', getComputedStyle(mockupImage).width);
+            console.log('🔍 Image height:', getComputedStyle(mockupImage).height);
+            
+            // Force visibility for debugging
+            mockupImage.style.border = '3px solid red';
+            mockupImage.style.background = 'yellow';
+            mockupImage.style.minHeight = '200px';
+            mockupImage.style.minWidth = '200px';
+            console.log('🔧 Added debug styling to image');
+        } else {
+            console.error('❌ No .mockup-image element found in generated HTML');
+        }
         
         // Show actions
         if (previewActions) {
             previewActions.style.display = 'flex';
         }
+    }
+
+    downloadImage() {
+        console.log('📥 Download function called');
+        
+        // Get the current mockup URL
+        const mockupImage = document.querySelector('.mockup-image');
+        if (!mockupImage || !mockupImage.src) {
+            console.error('❌ No image found to download');
+            Components.showToast('No image available to download', 'error');
+            return;
+        }
+
+        const imageUrl = mockupImage.src;
+        console.log('📥 Downloading image from:', imageUrl);
+
+        // Create a temporary anchor element to trigger download
+        const link = document.createElement('a');
+        link.href = imageUrl;
+        link.download = `PKL-Design-${Date.now()}.jpg`; // Generate unique filename
+        link.target = '_blank';
+        
+        // Append to body, click, and remove
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        console.log('✅ Download triggered successfully');
+        Components.showToast('Design download started!', 'success');
     }
 }
 

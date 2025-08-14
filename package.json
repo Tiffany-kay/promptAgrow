@@ -1,5 +1,5 @@
 {
-  "name": "promptagro-frontend",
+  "name": "pkl-frontend",
   "version": "1.0.0",
   "description": "AI-Powered Agri-Packaging Platform Frontend",
   "main": "frontend/index.html",

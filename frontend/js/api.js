@@ -37,11 +37,15 @@ class API {
                 return await this.hfAPI.generatePackaging(productData);
             }
             
-            // Use backend API
-            const response = await this.request('/generate', {
+            // Use backend API with the working Replicate endpoint
+            const response = await this.request('/generate-replicate', {
                 method: 'POST',
                 body: formData // FormData object with image and form fields
             });
+            
+            console.log('🔄 Raw backend response:', response);
+            console.log('🔄 Response type:', typeof response);
+            console.log('🔄 Response keys:', Object.keys(response || {}));
             
             if (response.success) {
                 // Normalize response format for frontend compatibility
@@ -54,6 +58,8 @@ class API {
                     cost: response.data.cost || 'FREE'
                 };
                 console.log('🔄 Normalized response data:', normalizedData);
+                console.log('🔄 Final mockupUrl:', normalizedData.mockupUrl);
+                console.log('🔄 Original response.data:', response.data);
                 return normalizedData;
             } else {
                 throw new Error(response.error || 'Failed to generate packaging');

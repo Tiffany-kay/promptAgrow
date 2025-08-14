@@ -1,5 +1,5 @@
 """
-PromptAgro FastAPI Backend
+PKL FastAPI Backend
 AI-Powered Agri-Packaging Platform
 """
 
@@ -15,7 +15,7 @@ from app.config import settings
 
 # Create FastAPI application
 app = FastAPI(
-    title="PromptAgro API",
+    title="PKL API",
     description="AI-Powered Agricultural Packaging Platform",
     version="1.0.0",
     docs_url="/docs",
@@ -43,7 +43,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 @app.get("/")
 async def root():
     return {
-        "message": "PromptAgro API is running!",
+        "message": "PKL API is running!",
         "version": "1.0.0",
         "docs": "/docs"
     }

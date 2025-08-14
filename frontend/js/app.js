@@ -18,7 +18,7 @@ class App {
             // Show landing screen
             this.showScreen('landing');
             
-            console.log('PromptAgro app initialized successfully');
+            console.log('PKL app initialized successfully');
         } catch (error) {
             console.error('Failed to initialize app:', error);
             Components.showToast('Failed to load application', 'error');
@@ -250,6 +250,11 @@ class App {
             const result = await api.generatePackaging(formData);
             
             console.log('🎯 Backend API Result:', result);
+            console.log('🎯 Result type:', typeof result);
+            console.log('🎯 Result keys:', Object.keys(result || {}));
+            console.log('🎯 Result success:', result?.success);
+            console.log('🎯 Result mockupUrl:', result?.mockupUrl);
+            console.log('🎯 Result error:', result?.error);
             
             if (result && !result.error) {
                 console.log('✅ Processing successful result:', result);
@@ -311,6 +316,12 @@ class App {
                         } else {
                             console.error('❌ displayPreview method not found on wizard');
                         }
+                        
+                        // 🎯 NAVIGATE TO PREVIEW STEP TO SHOW THE IMAGE!
+                        console.log('🎯 Navigating to preview step...');
+                        if (this.wizard && this.wizard.showStep) {
+                            this.wizard.showStep(4); // Go to preview step (index 4)
+                        }
                     }, 500);
                     
                     Components.showToast('Design generated successfully!', 'success');
@@ -363,5 +374,6 @@ class App {
 // Initialize app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     window.app = new App();
+    window.wizard = app.wizard; // Expose wizard globally for onclick handlers
     app.init();
 });

@@ -1,4 +1,4 @@
-# PromptAgro - AI-Powered Agri-Packaging Platform
+# PKL - AI-Powered Agri-Packaging Platform
 
 Transform your farm products into premium brands with AI-powered packaging design.
 

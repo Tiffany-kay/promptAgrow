@@ -1,5 +1,5 @@
 """
-API Routes for PromptAgro Backend
+API Routes for PKL Backend
 Using our own AI instead of external services
 """
 
@@ -17,7 +17,7 @@ from app.models import (
     SaveDesignRequest,
     HealthResponse
 )
-from app.services.promptagro_ai import PromptAgroAI
+from app.services.promptagro_ai import PKLAI
 from app.services.storage import StorageService
 from app.services.replicate_generator import ReplicateImageGenerator
 from app.utils_simple import validate_image, create_pdf_report
@@ -26,7 +26,7 @@ from app.config import settings
 router = APIRouter()
 
 # Initialize services with our own AI
-promptagro_ai = PromptAgroAI(settings.GOOGLE_AI_API_KEY)
+pkl_ai = PKLAI(settings.GOOGLE_AI_API_KEY)
 storage_service = StorageService()
 
 # Initialize Replicate service
@@ -39,7 +39,7 @@ async def health_check():
         status="healthy",
         timestamp=datetime.utcnow(),
         services={
-            "promptagro_ai": await promptagro_ai.check_health(),
+            "pkl_ai": await pkl_ai.check_health(),
             "storage": await storage_service.check_health()
         }
     )
@@ -76,7 +76,7 @@ async def generate_packaging(
         image_path = await storage_service.save_upload(image, design_id)
         
         # Step 1: Generate packaging concepts with our AI
-        concepts = await promptagro_ai.generate_packaging_concepts({
+        concepts = await pkl_ai.generate_packaging_concepts({
             "productName": productName,
             "tagline": tagline,
             "preferredColors": colors,
@@ -87,7 +87,7 @@ async def generate_packaging(
         })
         
         # Step 2: Generate mockup with our AI
-        mockup_data = await promptagro_ai.generate_packaging_mockup(
+        mockup_data = await pkl_ai.generate_packaging_mockup(
             image_path=image_path,
             concepts=concepts,
             product_data={
@@ -181,7 +181,7 @@ async def regenerate_design(request: RegenerateRequest):
             raise HTTPException(status_code=404, detail="Design not found")
         
         # Apply customizations with our AI
-        updated_mockup = await promptagro_ai.generate_packaging_mockup(
+        updated_mockup = await pkl_ai.generate_packaging_mockup(
             image_path=f"storage/uploads/{request.designId}_original.jpg",
             concepts={
                 "text_concepts": ["Updated Design"],
@@ -299,6 +299,10 @@ async def generate_with_replicate(
             "desiredEmotion": desiredEmotion
         }
         result = await generator.generate_packaging_image(product_data)
+        
+        print(f"🔍 Routes result keys: {result.keys() if result else 'None'}")
+        print(f"🔍 Routes image_url: {result.get('image_url', 'NOT_FOUND')}")
+        print(f"🔍 Routes success: {result.get('success', 'NOT_FOUND')}")
         
         # Convert to GenerateResponse format
         return GenerateResponse(

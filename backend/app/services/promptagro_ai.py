@@ -1,5 +1,5 @@
 """
-PromptAgro AI Service - DeepAI + Gemini Stack
+PKL AI Service - DeepAI + Gemini Stack
 Uses Gemini for text + DeepAI for reliable image generation
 """
 
@@ -9,7 +9,7 @@ from typing import Dict, Any, List
 from .deepai_generator import DeepAIImageGenerator
 from .text_advisor import create_smart_packaging_advice, create_concept_summary
 
-class PromptAgroAI:
+class PKLAI:
     def __init__(self, gemini_api_key: str):
         self.api_key = gemini_api_key
         self.model = "gemini-1.5-flash"
@@ -244,7 +244,7 @@ Generate a high-quality, realistic packaging mockup that would attract customers
             "dimensions": {"width": "responsive", "height": "adaptive"},
             "quality_score": 0.95,  # High quality advice!
             "ai_confidence": 0.98,  # Very confident in our advice
-            "generator": "PromptAgro Smart Advisor",
+            "generator": "PKL Smart Advisor",
             "cost": "FREE",
             "advice_mode": True,
             "professional_advice": professional_advice,

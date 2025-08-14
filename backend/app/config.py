@@ -1,5 +1,5 @@
 """
-Configuration settings for PromptAgro Backend
+Configuration settings for PKL Backend
 """
 
 import os
@@ -18,8 +18,10 @@ class Settings:
     # CORS Configuration
     CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
+        "http://localhost:5173",  # Frontend development server
         "http://localhost:8000", 
         "http://127.0.0.1:3000",
+        "http://127.0.0.1:5173",  # Frontend development server
         "http://127.0.0.1:8000",
         "https://promptagrow.netlify.app",
         "https://promptagrow.onrender.com"
@@ -35,7 +37,6 @@ class Settings:
     GOOGLE_AI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
     DEEPAI_API_KEY: str = os.getenv("DEEPAI_API_KEY", "")
     HUGGINGFACE_API_KEY: str = os.getenv("HUGGINGFACE_API_KEY", "")
-    REPLICATE_API_KEY: str = os.getenv("REPLICATE_API_KEY", "")
     REPLICATE_API_TOKEN: str = os.getenv("REPLICATE_API_TOKEN", "")
     OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
     

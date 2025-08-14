@@ -1,5 +1,5 @@
 """
-Replicate AI Image Generation Service for PromptAgro
+Replicate AI Image Generation Service for PKL
 Uses Stability AI SDXL via Replicate API for high-quality agricultural packaging designs
 """
 
@@ -63,7 +63,9 @@ class ReplicateImageGenerator:
             
             # Generate image via Replicate API using Google Imagen-3-Fast (best for text)
             loop = asyncio.get_event_loop()
-            output = await loop.run_in_executor(
+            
+            # Call Replicate and get the result
+            result = await loop.run_in_executor(
                 None, 
                 lambda: self.client.run(
                     "google/imagen-3-fast",
@@ -78,35 +80,32 @@ class ReplicateImageGenerator:
                 )
             )
             
-            if output:
-                # Handle different output types
-                try:
-                    # Try to convert to list first
-                    output_list = list(output) if hasattr(output, '__iter__') and not isinstance(output, str) else [output]
-                    if len(output_list) > 0:
-                        # Handle both URL strings and FileOutput objects
-                        first_item = output_list[0]
-                        if hasattr(first_item, 'url'):
-                            image_url = str(first_item.url)
-                        else:
-                            image_url = str(first_item)
-                        
-                        design_id = f"replicate_{uuid.uuid4().hex[:8]}"
-                        
-                        print(f"✅ Image generated successfully: {image_url}")
-                        
-                        return {
-                            "success": True,
-                            "design_id": design_id,
-                            "image_url": image_url,
-                            "generator": "Google Imagen-3-Fast (Replicate)",
-                            "cost": "~$0.003 per image",
-                            "prompt_used": prompt
-                        }
-                    else:
-                        raise ValueError("Empty output list")
-                except Exception as output_error:
-                    print(f"❌ Output processing error: {str(output_error)}")
+            print(f"🔍 Raw Replicate result: {type(result)} - {result}")
+            
+            # Handle the result properly
+            if result:
+                # Google Imagen-3-Fast returns a list of URLs
+                if isinstance(result, list) and len(result) > 0:
+                    image_url = str(result[0])
+                else:
+                    image_url = str(result)
+                    
+                # Ensure it's a proper URL
+                if image_url.startswith('http'):
+                    design_id = f"replicate_{uuid.uuid4().hex[:8]}"
+                    
+                    print(f"✅ Image generated successfully: {image_url}")
+                    
+                    return {
+                        "success": True,
+                        "design_id": design_id,
+                        "image_url": image_url,
+                        "generator": "Google Imagen-3-Fast (Replicate)",
+                        "cost": "~$0.003 per image",
+                        "prompt_used": prompt
+                    }
+                else:
+                    print(f"⚠️ Invalid URL format: {image_url}")
                     return await self._create_demo_image(product_data)
             else:
                 print("❌ No output from Replicate")
@@ -114,6 +113,46 @@ class ReplicateImageGenerator:
                 
         except Exception as e:
             print(f"❌ Replicate API error: {str(e)}")
+            return await self._create_demo_image(product_data)
+    
+    async def _save_binary_image(self, binary_data: str, product_data: Dict[str, Any]) -> str:
+        """Save binary image data and return a URL"""
+        try:
+            import base64
+            import os
+            from pathlib import Path
+            
+            # Create storage directory
+            storage_dir = Path("static/designs")
+            storage_dir.mkdir(parents=True, exist_ok=True)
+            
+            # Generate unique filename
+            design_id = f"replicate_{uuid.uuid4().hex[:8]}"
+            filename = f"{design_id}.jpg"
+            filepath = storage_dir / filename
+            
+            # Convert binary string to bytes if needed
+            if isinstance(binary_data, str) and binary_data.startswith('b\''):
+                # Handle binary string representation
+                import ast
+                binary_bytes = ast.literal_eval(binary_data)
+            else:
+                # Try to decode if it's base64
+                try:
+                    binary_bytes = base64.b64decode(binary_data)
+                except:
+                    # If all else fails, encode the string
+                    binary_bytes = binary_data.encode() if isinstance(binary_data, str) else binary_data
+            
+            # Save the image
+            with open(filepath, 'wb') as f:
+                f.write(binary_bytes)
+            
+            # Return URL path
+            return f"/static/designs/{filename}"
+            
+        except Exception as e:
+            print(f"❌ Failed to save binary image: {str(e)}")
             return await self._create_demo_image(product_data)
     
     async def _create_demo_image(self, product_data: Dict[str, Any]) -> Dict[str, Any]:

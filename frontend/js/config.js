@@ -1,12 +1,12 @@
-// Configuration file for PromptAgro Frontend
+// Configuration file for PKL Frontend
 window.CONFIG = {
     // Backend API Configuration
     API: {
-        // Production backend URL
-        BASE_URL: 'https://promptagrow.onrender.com/api',
+        // Local backend URL for testing the fix
+        BASE_URL: 'http://localhost:8001/api',
         
-        // Development backend URL (comment out when deploying)
-        // BASE_URL: 'http://localhost:8001/api',
+        // Production backend URL 
+        // BASE_URL: 'https://promptagrow.onrender.com/api',
         
         // Request timeout in milliseconds
         TIMEOUT: 30000,

@@ -260,7 +260,7 @@ class DeepAIImageGenerator:
             "success": True,
             "design_id": design_id,
             "image_url": f"data:image/svg+xml;base64,{base64.b64encode(svg_content.encode()).decode()}",
-            "generator": "PromptAgro Smart Designer + Advisor",
+            "generator": "PKL Smart Designer + Advisor",
             "cost": "FREE (with professional advice!)",
             "has_professional_advice": True,
             "professional_advice": professional_advice,

@@ -1,5 +1,5 @@
 """
-Simplified Pydantic models for PromptAgro API
+Simplified Pydantic models for PKL API
 No complex dependencies
 """
 
